@@ -1,0 +1,31 @@
+Project contrans {
+  database_type: 'PostgreSQL'
+  Note: '''
+    # Congress Transparency Dashboard project
+    **markdown content here**
+  '''
+}
+Table memebrs as M {
+  id int [pk, increment]
+  full_name varchar
+  created_at timestamp
+  country_code int
+  note: "table 'users' contains user information"
+}
+Table terms as T {
+  id int [pk]
+  merchant_name varchar
+  country_code int [note: "country of merchant"]
+  admin_id int [ref: > U.id]
+  created_at datetime [default: `now()`, note: "created time"]
+  note: "Members data combines Congress API bio info with Open Secrets ID and  Voteview ideology"
+}
+Table votes as V {
+  code int [pk]
+  name varchar
+  continent_name varchar
+}
+
+
+Ref: M.bioguide_id < T.bioguide_id 
+Ref: M.icpsr < V.icpsr
