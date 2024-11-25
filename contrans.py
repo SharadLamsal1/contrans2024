@@ -359,26 +359,7 @@ class contrans:
                                 font=dict(size=12, color="red"))
                 return fig
 
-        def get_summary_text(self, input_text, sentences_count=3):
-                parser = PlaintextParser.from_string(input_text, Tokenizer("english"))
-                summarizer = LsaSummarizer()
-                summary = summarizer(parser.document, sentences_count)  
-                sumtext = ''
-                for sentence in summary:
-                        sumtext = sumtext + str(sentence)
-                return sumtext     
-
-        def summarize_news(self, bioguide_id, engine):
-           myquery = f'''
-                        SELECT *
-                        FROM members
-                        WHERE bioguideid = '{bioguide_id}'
-                '''
-           df = pd.read_sql_query(myquery, con=engine)
-           news_query = df['firstname'][0] + ' ' + df['lastname'][0] + ' ' + df['partyname'][0] + ' ' + df['state'][0] + ' ' + df['chamber'][0] + ' Congress'
-           r = requests.get('https://newsapi.org/v2/everything',
-                            params={'q': news_query, 'apiKey': self.newskey},
-                            headers={'User-Agent': self.useragent})
-           return r
+        
+        
 
                          
